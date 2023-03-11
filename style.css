@@ -1,0 +1,103 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  overflow: hidden;
+}
+
+/* Utility Classes */
+.flex-2 {
+  flex: 2;
+}
+
+.controls .light {
+  background-color: #a6a6a6;
+  color: #000;
+}
+
+.controls .light:active {
+  background-color: #d4d3d3;
+}
+
+.controls .dark {
+  background-color: #333333;
+  color: #fff;
+}
+
+.controls .dark:active {
+  background-color: #676768;
+}
+
+.controls .orange {
+  background-color: #ff9501;
+  color: #fff;
+}
+
+.controls .orange:active {
+  background-color: #fffeff;
+  color: #fe9528;
+}
+
+/* Regular Styles */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.calculator {
+  width: 425px;
+  height: 690px;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  overflow: hidden;
+  -webkit-box-shadow: 10px 9px 5px -5px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 10px 9px 5px -5px rgba(0, 0, 0, 0.3);
+  box-shadow: 10px 9px 5px -5px rgba(0, 0, 0, 0.3);
+}
+
+.display {
+  color: #fff;
+  font-size: 70px;
+  padding: 85px 45px 15px;
+  display: flex;
+  flex: 1;
+  align-items: end;
+  justify-content: end;
+}
+
+.display.small-font {
+  font-size: 63px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 15px 30px 30px;
+}
+
+.controls button {
+  background: gray;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  font-size: 35px;
+}
+
+.controls .flex-2 {
+  border-radius: 999em;
+}
