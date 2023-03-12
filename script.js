@@ -1,54 +1,91 @@
 const displayText = document.querySelector('.display');
 const buttons = document.querySelectorAll('button');
 
-let = firstNumber = 0;
-let = secondNumber = 0;
-let = result = 0;
+let firstNumber = 0;
+let secondNumber = 0;
+let result = 0;
+let operand = '';
 
-// 0. Add event listeners to all buttons
+// Variable Flags
+let isEquationReady = false;
+let isNumberButton;
+let isAcButton;
+let isPlusMinusButton;
+let isPercentButton;
+let isDivisionButton;
+let isMultiplicationButton;
+let isSubtractionButton;
+let isAdditionButton;
+let isEqualButton;
+let isDecimalButton;
+let isFirstNumber;
+let isSecondNumber;
+
+logEquationParts(); // Delete this eventually
+
+// Add event listeners to all buttons
 buttons.forEach(button => {
   button.addEventListener('click', () => {
+    updateFlags(button);
     updateDisplay(button);
+    isEquationReady = updateEquationVariables(button);
   });
 });
 
 // 1. Create a function to update the display when a number is pressed
 function updateDisplay(button) {
-  if (displayText.innerText === '0' && button.classList.contains('number')) {
-    displayText.innerText = '';
-  }
-
   switch (true) {
-    case button.classList.contains('number'):
+    case isNumberButton && operand === '' && displayText.innerText === '0':
+      displayText.innerText = '';
       displayText.innerText += button.innerText;
       break;
 
-    case button.classList.contains('ac'):
+    case isNumberButton && operand !== '' && firstNumber !== 0:
+      displayText.innerText = '';
+      displayText.innerText += button.innerText;
+      break;
+
+    case isNumberButton && operand !== '' && secondNumber === 0:
+      // displayText.innerText = '';
+      displayText.innerText += button.innerText;
+      break;
+
+    case isNumberButton & (displayText.innerText !== '0'):
+      displayText.innerText += button.innerText;
+      break;
+
+    case isAcButton:
       allClear();
       break;
 
-    case button.classList.contains('plus-minus'):
+    case isPlusMinusButton:
       break;
 
-    case button.classList.contains('percent'):
+    case isPercentButton:
       break;
 
-    case button.classList.contains('division'):
+    case isDivisionButton:
       break;
 
-    case button.classList.contains('multiplication'):
+    case isMultiplicationButton:
       break;
 
-    case button.classList.contains('subtraction'):
+    case isSubtractionButton:
       break;
 
-    case button.classList.contains('addition'):
+    case isAdditionButton:
+      if (isEquationReady) {
+        calculateEquation();
+      }
+
       break;
 
-    case button.classList.contains('equal'):
+    case isEqualButton && isEquationReady:
+      calculateEquation();
       break;
 
-    case button.classList.contains('decimal'):
+    case isDecimalButton:
+      displayText.innerText += button.innerText;
       break;
 
     default:
@@ -56,18 +93,82 @@ function updateDisplay(button) {
   }
 }
 
-// 2. Create a function to add numbers if + or = is pressed
+// Create a function that update the variable flags
+function updateFlags(button) {
+  isNumberButton = button.classList.contains('number');
+  isAcButton = button.classList.contains('ac');
+  isPlusMinusButton = button.classList.contains('plus-minus');
+  isPercentButton = button.classList.contains('percent');
+  isDivisionButton = button.classList.contains('division');
+  isMultiplicationButton = button.classList.contains('multiplication');
+  isSubtractionButton = button.classList.contains('subtraction');
+  isAdditionButton = button.classList.contains('addition');
+  isEqualButton = button.classList.contains('equal');
+  isDecimalButton = button.classList.contains('decimal');
+  isFirstNumber = firstNumber !== 0;
+  isSecondNumber = secondNumber !== 0;
+}
 
-// 3. Create a function to subs-tract numbers if - or = is pressed
+// Create a function that pushes values to the equation parts
+function updateEquationVariables(button) {
+  switch (true) {
+    case !button.classList.contains('number') && operand === '' && result === 0:
+      firstNumber = Number(displayText.innerText);
+      operand = !button.classList.contains('ac') ? button.classList[0] : '';
+      logEquationParts(); // Delete this eventually
+      return firstNumber !== 0 && secondNumber !== 0 && operand !== '';
 
-// 4. Create a function to multiply numbers if x or = is pressed
+    case operand !== '' && result === 0:
+      secondNumber = Number(displayText.innerText);
+      logEquationParts(); // Delete this eventually
 
-// 5. Create a function to divide numbers if ÷ or = is pressed
+      return firstNumber !== 0 && secondNumber !== 0 && operand !== '';
 
-// 6. Create a function to clear all
+    default:
+      break;
+  }
+}
+
+// Create a function to calculate the current equation
+function calculateEquation() {
+  switch (operand) {
+    case 'addition':
+      result = firstNumber + secondNumber;
+      displayText.innerText = result;
+      secondNumber = 0;
+      logEquationParts();
+      break;
+
+    default:
+      break;
+  }
+}
+
+// Create a function to add numbers if + or = is pressed
+function addition() {
+  result = firstNumber + secondNumber;
+}
+
+// Create a function to subs-tract numbers if - or = is pressed
+
+// Create a function to multiply numbers if x or = is pressed
+
+// Create a function to divide numbers if ÷ or = is pressed
+
+// Create a function to clear all
 function allClear() {
   displayText.innerText = '0';
   firstNumber = 0;
   secondNumber = 0;
   result = 0;
+  operand = '';
+}
+
+function logEquationParts() {
+  console.log(`The value of the equation parts ARE.
+First number is: ${firstNumber}
+Second number is: ${secondNumber}
+Result is: ${result}
+Operand is: ${operand}
+Is equation ready?: ${isEquationReady}`);
 }
