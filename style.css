@@ -4,13 +4,16 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  font-weight: 300;
+  font-weight: bold;
   overflow: hidden;
 }
 
 /* Utility Classes */
-.flex-2 {
+.controls .flex-2 {
   flex: 2;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
 }
 
 .controls .light {
@@ -34,6 +37,7 @@ body {
 .controls .orange {
   background-color: #ff9501;
   color: #fff;
+  font-size: 42px;
 }
 
 .controls .orange:active {
