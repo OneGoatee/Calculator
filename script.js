@@ -12,7 +12,7 @@ buttons.forEach(button => {
 
 // 1. Create a function to update the display when a number is pressed
 function updateDisplay(button) {
-  if (displayText.innerText === '0') {
+  if (displayText.innerText === '0' && button.classList.contains('number')) {
     displayText.innerText = '';
   }
 
