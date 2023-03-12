@@ -16,6 +16,10 @@ function updateDisplay(button) {
     displayText.innerText = '';
   }
 
+  if (button.classList.contains('ac')) {
+    allClear();
+  }
+
   if (button.classList.contains('number')) {
     displayText.innerText += button.innerText;
   }
@@ -30,3 +34,6 @@ function updateDisplay(button) {
 // 5. Create a function to divide numbers if ÷ or = is pressed
 
 // 6. Create a function to clear all
+function allClear() {
+  displayText.innerText = '0';
+}
