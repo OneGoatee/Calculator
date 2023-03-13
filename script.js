@@ -1,174 +1,136 @@
-const displayText = document.querySelector('.display');
+const display = document.querySelector('.display');
 const buttons = document.querySelectorAll('button');
 
+// Main Variables
+let displayText = '';
 let firstNumber = 0;
 let secondNumber = 0;
 let result = 0;
-let operand = '';
+let operator = '';
+let operatorCount = 0;
 
 // Variable Flags
-let isEquationReady = false;
-let isNumberButton;
-let isAcButton;
-let isPlusMinusButton;
-let isPercentButton;
-let isDivisionButton;
-let isMultiplicationButton;
-let isSubtractionButton;
-let isAdditionButton;
-let isEqualButton;
-let isDecimalButton;
-let isFirstNumber;
-let isSecondNumber;
+let isNumberBtn = false;
+let isDecimalBtn = false;
+let isOperatorBtn = false;
+let isEqualBtn = false;
+let isFirstNumber = false;
+let isSecondNumber = false;
+let operatorCountZero = false;
+let operatorCountOne = false;
+let clearDisplayForSecondNumber = false;
 
-logEquationParts(); // Delete this eventually
-
-// Add event listeners to all buttons
 buttons.forEach(button => {
   button.addEventListener('click', () => {
     updateFlags(button);
     updateDisplay(button);
-    isEquationReady = updateEquationVariables(button);
   });
 });
 
-// 1. Create a function to update the display when a number is pressed
-function updateDisplay(button) {
-  switch (true) {
-    case isNumberButton && operand === '' && displayText.innerText === '0':
-      displayText.innerText = '';
-      displayText.innerText += button.innerText;
-      break;
-
-    case isNumberButton && operand !== '' && firstNumber !== 0:
-      displayText.innerText = '';
-      displayText.innerText += button.innerText;
-      break;
-
-    case isNumberButton && operand !== '' && secondNumber === 0:
-      // displayText.innerText = '';
-      displayText.innerText += button.innerText;
-      break;
-
-    case isNumberButton & (displayText.innerText !== '0'):
-      displayText.innerText += button.innerText;
-      break;
-
-    case isAcButton:
-      allClear();
-      break;
-
-    case isPlusMinusButton:
-      break;
-
-    case isPercentButton:
-      break;
-
-    case isDivisionButton:
-      break;
-
-    case isMultiplicationButton:
-      break;
-
-    case isSubtractionButton:
-      break;
-
-    case isAdditionButton:
-      if (isEquationReady) {
-        calculateEquation();
-      }
-
-      break;
-
-    case isEqualButton && isEquationReady:
-      calculateEquation();
-      break;
-
-    case isDecimalButton:
-      displayText.innerText += button.innerText;
-      break;
-
-    default:
-      break;
-  }
-}
-
-// Create a function that update the variable flags
-function updateFlags(button) {
-  isNumberButton = button.classList.contains('number');
-  isAcButton = button.classList.contains('ac');
-  isPlusMinusButton = button.classList.contains('plus-minus');
-  isPercentButton = button.classList.contains('percent');
-  isDivisionButton = button.classList.contains('division');
-  isMultiplicationButton = button.classList.contains('multiplication');
-  isSubtractionButton = button.classList.contains('subtraction');
-  isAdditionButton = button.classList.contains('addition');
-  isEqualButton = button.classList.contains('equal');
-  isDecimalButton = button.classList.contains('decimal');
-  isFirstNumber = firstNumber !== 0;
-  isSecondNumber = secondNumber !== 0;
-}
-
-// Create a function that pushes values to the equation parts
-function updateEquationVariables(button) {
-  switch (true) {
-    case !button.classList.contains('number') && operand === '' && result === 0:
-      firstNumber = Number(displayText.innerText);
-      operand = !button.classList.contains('ac') ? button.classList[0] : '';
-      logEquationParts(); // Delete this eventually
-      return firstNumber !== 0 && secondNumber !== 0 && operand !== '';
-
-    case operand !== '' && result === 0:
-      secondNumber = Number(displayText.innerText);
-      logEquationParts(); // Delete this eventually
-
-      return firstNumber !== 0 && secondNumber !== 0 && operand !== '';
-
-    default:
-      break;
-  }
-}
-
-// Create a function to calculate the current equation
-function calculateEquation() {
-  switch (operand) {
-    case 'addition':
-      result = firstNumber + secondNumber;
-      displayText.innerText = result;
-      secondNumber = 0;
-      logEquationParts();
-      break;
-
-    default:
-      break;
-  }
-}
-
-// Create a function to add numbers if + or = is pressed
-function addition() {
+function add() {
   result = firstNumber + secondNumber;
 }
 
-// Create a function to subs-tract numbers if - or = is pressed
+function subtract() {
+  result = firstNumber - secondNumber;
+}
 
-// Create a function to multiply numbers if x or = is pressed
+function multiply() {
+  result = firstNumber * secondNumber;
+}
 
-// Create a function to divide numbers if ÷ or = is pressed
+function divide() {
+  result = firstNumber / secondNumber;
+}
 
-// Create a function to clear all
-function allClear() {
-  displayText.innerText = '0';
+function operate(operator) {
+  switch (operator) {
+    case 'addition':
+      add();
+      break;
+
+    case 'subtraction':
+      subtract();
+      break;
+
+    case 'multiplication':
+      multiply();
+      break;
+
+    case 'division':
+      divide();
+      break;
+
+    default:
+      break;
+  }
+
+  prepareForNextOperation();
+}
+
+function clear() {
+  displayText = '';
   firstNumber = 0;
   secondNumber = 0;
   result = 0;
-  operand = '';
 }
 
-function logEquationParts() {
-  console.log(`The value of the equation parts ARE.
-First number is: ${firstNumber}
-Second number is: ${secondNumber}
-Result is: ${result}
-Operand is: ${operand}
-Is equation ready?: ${isEquationReady}`);
+function updateFlags(button) {
+  isNumberBtn = button.classList.contains('number-btn');
+  isDecimalBtn = button.classList.contains('decimal-btn');
+  isOperatorBtn = button.classList.contains('operator-btn');
+  isEqualBtn = button.classList.contains('equal-btn');
+  isFirstNumber = firstNumber !== 0;
+  isSecondNumber = secondNumber !== 0;
+  operatorCountZero = operatorCount === 0;
+  operatorCountOne = operatorCount === 1;
+}
+
+function updateDisplay(button) {
+  // This function will update the display text
+
+  switch (true) {
+    case (isNumberBtn || isDecimalBtn) && operatorCountZero:
+      displayText += button.innerText;
+      display.innerText = displayText;
+      firstNumber = Number(displayText);
+      break;
+
+    case (isNumberBtn || isDecimalBtn) && operatorCountOne && clearDisplayForSecondNumber:
+      displayText = '';
+      displayText += button.innerText;
+      display.innerText = displayText;
+      secondNumber = Number(displayText);
+      clearDisplayForSecondNumber = !clearDisplayForSecondNumber;
+      break;
+
+    case (isNumberBtn || isDecimalBtn) && operatorCountOne && !clearDisplayForSecondNumber:
+      displayText += button.innerText;
+      display.innerText = displayText;
+      secondNumber = Number(displayText);
+      break;
+
+    case isOperatorBtn && operatorCountZero:
+      operator = button.classList[0];
+      operatorCount++;
+      clearDisplayForSecondNumber = !clearDisplayForSecondNumber;
+      break;
+
+    case isEqualBtn && isFirstNumber && isSecondNumber:
+      operate(operator);
+
+      break;
+
+    default:
+      break;
+  }
+}
+
+function prepareForNextOperation() {
+  displayText = result;
+  firstNumber = result;
+  secondNumber = 0;
+  display.innerText = displayText;
+  operator = '';
+  operatorCount = 0;
 }
