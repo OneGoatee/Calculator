@@ -14,6 +14,7 @@ let isNumberBtn = false;
 let isDecimalBtn = false;
 let isOperatorBtn = false;
 let isEqualBtn = false;
+let isPlusMinusBtn = false;
 let isFirstNumber = false;
 let isSecondNumber = false;
 let operatorCountZero = false;
@@ -41,6 +42,10 @@ function multiply() {
 
 function divide() {
   result = firstNumber / secondNumber;
+}
+
+function plusMinus() {
+  console.log(`Plus Minus Timeee!`);
 }
 
 function operate(operator) {
@@ -80,6 +85,7 @@ function updateFlags(button) {
   isDecimalBtn = button.classList.contains('decimal-btn');
   isOperatorBtn = button.classList.contains('operator-btn');
   isEqualBtn = button.classList.contains('equal-btn');
+  isPlusMinusBtn = button.classList.contains('plus-minus-btn');
   isFirstNumber = firstNumber !== 0;
   isSecondNumber = secondNumber !== 0;
   operatorCountZero = operatorCount === 0;
@@ -87,8 +93,6 @@ function updateFlags(button) {
 }
 
 function updateDisplay(button) {
-  // This function will update the display text
-
   switch (true) {
     case (isNumberBtn || isDecimalBtn) && operatorCountZero:
       displayText += button.innerText;
@@ -116,9 +120,14 @@ function updateDisplay(button) {
       clearDisplayForSecondNumber = !clearDisplayForSecondNumber;
       break;
 
+    case isPlusMinusBtn && display.innerText !== '0':
+      displayText = display.innerText * -1;
+      display.innerText = displayText;
+      firstNumber = Number(displayText);
+      break;
+
     case isEqualBtn && isFirstNumber && isSecondNumber:
       operate(operator);
-
       break;
 
     default:
