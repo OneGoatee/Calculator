@@ -17,6 +17,7 @@ let isOperatorBtn = false;
 let isEqualBtn = false;
 let isPlusMinusBtn = false;
 let isPercentBtn = false;
+let isClearBtn = false;
 let isFirstNumber = false;
 let isSecondNumber = false;
 let isDisplayZero = false;
@@ -59,6 +60,16 @@ function percent() {
   firstNumber = Number(displayText);
 }
 
+function allClear() {
+  displayText = '';
+  display.innerText = 0;
+  firstNumber = 0;
+  secondNumber = 0;
+  result = 0;
+  operator = '';
+  operatorCount = 0;
+}
+
 function operate(operator) {
   switch (operator) {
     case 'addition':
@@ -84,13 +95,6 @@ function operate(operator) {
   prepareForNextOperation();
 }
 
-function clear() {
-  displayText = '';
-  firstNumber = 0;
-  secondNumber = 0;
-  result = 0;
-}
-
 function updateFlags(button) {
   isNumberBtn = button.classList.contains('number-btn');
   isNumberZeroBtn = button.classList.contains('zero');
@@ -99,6 +103,7 @@ function updateFlags(button) {
   isEqualBtn = button.classList.contains('equal-btn');
   isPlusMinusBtn = button.classList.contains('plus-minus-btn');
   isPercentBtn = button.classList.contains('percent-btn');
+  isClearBtn = button.classList.contains('clear-btn');
   isFirstNumber = firstNumber !== 0;
   isSecondNumber = secondNumber !== 0;
   isDisplayZero = display.innerText === '0';
@@ -147,6 +152,10 @@ function updateDisplay(button) {
 
     case isEqualBtn && isFirstNumber && isSecondNumber:
       operate(operator);
+      break;
+
+    case isClearBtn:
+      allClear();
       break;
 
     default:
