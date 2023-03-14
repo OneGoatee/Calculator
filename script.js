@@ -45,7 +45,9 @@ function divide() {
 }
 
 function plusMinus() {
-  console.log(`Plus Minus Timeee!`);
+  displayText = display.innerText * -1;
+  display.innerText = displayText;
+  firstNumber = Number(displayText);
 }
 
 function operate(operator) {
@@ -121,9 +123,7 @@ function updateDisplay(button) {
       break;
 
     case isPlusMinusBtn && display.innerText !== '0':
-      displayText = display.innerText * -1;
-      display.innerText = displayText;
-      firstNumber = Number(displayText);
+      plusMinus();
       break;
 
     case isEqualBtn && isFirstNumber && isSecondNumber:
