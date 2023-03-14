@@ -11,6 +11,7 @@ let operatorCount = 0;
 
 // Variable Flags
 let isNumberBtn = false;
+let isNumberZeroBtn = false;
 let isDecimalBtn = false;
 let isOperatorBtn = false;
 let isEqualBtn = false;
@@ -18,7 +19,7 @@ let isPlusMinusBtn = false;
 let isPercentBtn = false;
 let isFirstNumber = false;
 let isSecondNumber = false;
-let isScreenZero = false;
+let isDisplayZero = false;
 let operatorCountZero = false;
 let operatorCountOne = false;
 let clearDisplayForSecondNumber = false;
@@ -92,6 +93,7 @@ function clear() {
 
 function updateFlags(button) {
   isNumberBtn = button.classList.contains('number-btn');
+  isNumberZeroBtn = button.classList.contains('zero');
   isDecimalBtn = button.classList.contains('decimal-btn');
   isOperatorBtn = button.classList.contains('operator-btn');
   isEqualBtn = button.classList.contains('equal-btn');
@@ -99,13 +101,16 @@ function updateFlags(button) {
   isPercentBtn = button.classList.contains('percent-btn');
   isFirstNumber = firstNumber !== 0;
   isSecondNumber = secondNumber !== 0;
-  isScreenZero = display.innerText === '0';
+  isDisplayZero = display.innerText === '0';
   operatorCountZero = operatorCount === 0;
   operatorCountOne = operatorCount === 1;
 }
 
 function updateDisplay(button) {
   switch (true) {
+    case isNumberZeroBtn && isDisplayZero && operatorCountZero:
+      break;
+
     case (isNumberBtn || isDecimalBtn) && operatorCountZero:
       displayText += button.innerText;
       display.innerText = displayText;
@@ -132,11 +137,11 @@ function updateDisplay(button) {
       clearDisplayForSecondNumber = !clearDisplayForSecondNumber;
       break;
 
-    case isPlusMinusBtn && !isScreenZero:
+    case isPlusMinusBtn && !isDisplayZero:
       plusMinus();
       break;
 
-    case isPercentBtn && !isScreenZero:
+    case isPercentBtn && !isDisplayZero:
       percent();
       break;
 
