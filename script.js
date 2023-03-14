@@ -15,8 +15,10 @@ let isDecimalBtn = false;
 let isOperatorBtn = false;
 let isEqualBtn = false;
 let isPlusMinusBtn = false;
+let isPercentBtn = false;
 let isFirstNumber = false;
 let isSecondNumber = false;
+let isScreenZero = false;
 let operatorCountZero = false;
 let operatorCountOne = false;
 let clearDisplayForSecondNumber = false;
@@ -46,6 +48,12 @@ function divide() {
 
 function plusMinus() {
   displayText = display.innerText * -1;
+  display.innerText = displayText;
+  firstNumber = Number(displayText);
+}
+
+function percent() {
+  displayText = display.innerText / 100;
   display.innerText = displayText;
   firstNumber = Number(displayText);
 }
@@ -88,8 +96,10 @@ function updateFlags(button) {
   isOperatorBtn = button.classList.contains('operator-btn');
   isEqualBtn = button.classList.contains('equal-btn');
   isPlusMinusBtn = button.classList.contains('plus-minus-btn');
+  isPercentBtn = button.classList.contains('percent-btn');
   isFirstNumber = firstNumber !== 0;
   isSecondNumber = secondNumber !== 0;
+  isScreenZero = display.innerText === '0';
   operatorCountZero = operatorCount === 0;
   operatorCountOne = operatorCount === 1;
 }
@@ -122,8 +132,12 @@ function updateDisplay(button) {
       clearDisplayForSecondNumber = !clearDisplayForSecondNumber;
       break;
 
-    case isPlusMinusBtn && display.innerText !== '0':
+    case isPlusMinusBtn && !isScreenZero:
       plusMinus();
+      break;
+
+    case isPercentBtn && !isScreenZero:
+      percent();
       break;
 
     case isEqualBtn && isFirstNumber && isSecondNumber:
