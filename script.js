@@ -18,6 +18,10 @@ let isEqualBtn = false;
 let isPlusMinusBtn = false;
 let isPercentBtn = false;
 let isClearBtn = false;
+let isDivisionBtn = false;
+let isMultiplicationBtn = false;
+let isSubtractionBtn = false;
+let isAdditionBtn = false;
 let isFirstNumber = false;
 let isSecondNumber = false;
 let isDisplayZero = false;
@@ -29,6 +33,7 @@ buttons.forEach(button => {
   button.addEventListener('click', () => {
     updateFlags(button);
     updateDisplay(button);
+    updateOperatorButtons(button);
   });
 });
 
@@ -104,6 +109,10 @@ function updateFlags(button) {
   isPlusMinusBtn = button.classList.contains('plus-minus-btn');
   isPercentBtn = button.classList.contains('percent-btn');
   isClearBtn = button.classList.contains('clear-btn');
+  isDivisionBtn = button.classList.contains('division');
+  isMultiplicationBtn = button.classList.contains('multiplication');
+  isSubtractionBtn = button.classList.contains('subtraction');
+  isAdditionBtn = button.classList.contains('addition');
   isFirstNumber = firstNumber !== 0;
   isSecondNumber = secondNumber !== 0;
   isDisplayZero = display.innerText === '0';
@@ -170,4 +179,20 @@ function prepareForNextOperation() {
   display.innerText = displayText;
   operator = '';
   operatorCount = 0;
+}
+
+function updateOperatorButtons(button) {
+  switch (true) {
+    case isDivisionBtn || isMultiplicationBtn || isSubtractionBtn || isAdditionBtn:
+      buttons.forEach(button => button.classList.remove('active'));
+      button.classList.add('active');
+      break;
+
+    case isEqualBtn || isClearBtn:
+      buttons.forEach(button => button.classList.remove('active'));
+      break;
+
+    default:
+      break;
+  }
 }

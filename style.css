@@ -40,7 +40,8 @@ body {
   font-size: 42px;
 }
 
-.controls .orange:active {
+.controls .orange:active,
+.controls .orange.active {
   background-color: #fffeff;
   color: #fe9528;
 }
