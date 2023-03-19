@@ -50,7 +50,11 @@ function multiply() {
 }
 
 function divide() {
-  result = firstNumber / secondNumber;
+  if (secondNumber === 0) {
+    result = `Error`;
+  } else {
+    result = firstNumber / secondNumber;
+  }
 }
 
 function plusMinus() {
