@@ -3,8 +3,8 @@ const buttons = document.querySelectorAll('button');
 
 // Main Variables
 let displayText = '';
-let firstNumber = 0;
-let secondNumber = 0;
+let firstNumber = '';
+let secondNumber = '';
 let result = 0;
 let operator = '';
 let operatorCount = 0;
@@ -113,8 +113,8 @@ function updateFlags(button) {
   isMultiplicationBtn = button.classList.contains('multiplication');
   isSubtractionBtn = button.classList.contains('subtraction');
   isAdditionBtn = button.classList.contains('addition');
-  isFirstNumber = firstNumber !== 0;
-  isSecondNumber = secondNumber !== 0;
+  isFirstNumber = firstNumber !== '';
+  isSecondNumber = secondNumber !== '';
   isDisplayZero = display.innerText === '0';
   operatorCountZero = operatorCount === 0;
   operatorCountOne = operatorCount === 1;
