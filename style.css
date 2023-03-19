@@ -19,31 +19,37 @@ body {
 .controls .light {
   background-color: #a6a6a6;
   color: #000;
+  transition: background-color 0.5s;
 }
 
 .controls .light:active {
   background-color: #d4d3d3;
+  transition: background-color 0s;
 }
 
 .controls .dark {
   background-color: #333333;
   color: #fff;
+  transition: background-color 0.5s;
 }
 
 .controls .dark:active {
   background-color: #676768;
+  transition: background-color 0s;
 }
 
 .controls .orange {
   background-color: #ff9501;
   color: #fff;
   font-size: 42px;
+  transition: background-color 0.5s, color 0.5s;
 }
 
 .controls .orange:active,
 .controls .orange.active {
   background-color: #fffeff;
   color: #fe9528;
+  transition: background-color 0.5s, color 0.5s;
 }
 
 /* Regular Styles */
