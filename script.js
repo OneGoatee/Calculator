@@ -35,6 +35,14 @@ buttons.forEach(button => {
     updateFlags(button);
     updateDisplay(button);
     updateOperatorButtons(button);
+
+    console.log(`First Number: ${firstNumber}
+    Second Number: ${secondNumber}
+    Result: ${result}
+    Display Text: ${displayText}
+    Operator: ${operator}
+    Operator Count: ${operatorCount}
+    Clear Display For Second Number: ${clearDisplayForSecondNumber}`);
   });
 });
 
@@ -130,7 +138,8 @@ function updateDisplay(button) {
   switch (true) {
     case (isNumberZeroBtn && isDisplayZero && operatorCountZero) ||
       (isNumberZeroBtn && isDisplayZero && operatorCountZero && isEqualBtn) ||
-      (isDecimalBtn && operatorCountZero && display.innerText.includes('.')):
+      (isDecimalBtn && operatorCountZero && display.innerText.includes('.')) ||
+      (isDecimalBtn && operatorCountOne && displayText === '0.'):
       break;
 
     case (isNumberBtn || isDecimalBtn) && operatorCountZero && result > 0:
