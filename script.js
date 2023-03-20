@@ -25,7 +25,6 @@ let isAdditionBtn = false;
 let isFirstNumber = false;
 let isSecondNumber = false;
 let isDisplayZero = false;
-let isResult = false;
 let operatorCountZero = false;
 let operatorCountOne = false;
 let clearDisplayForSecondNumber = false;
@@ -79,7 +78,6 @@ function allClear() {
   result = 0;
   operator = '';
   operatorCount = 0;
-  isResult = false;
 }
 
 function operate(operator) {
@@ -103,8 +101,6 @@ function operate(operator) {
     default:
       break;
   }
-
-  isResult = true;
 
   prepareForNextOperation();
 }
@@ -134,7 +130,7 @@ function updateDisplay(button) {
   switch (true) {
     case (isNumberZeroBtn && isDisplayZero && operatorCountZero) ||
       (isNumberZeroBtn && isDisplayZero && operatorCountZero && isEqualBtn) ||
-      (isDecimalBtn && display.innerText.includes('.')):
+      (isDecimalBtn && operatorCountZero && display.innerText.includes('.')):
       break;
 
     case (isNumberBtn || isDecimalBtn) && operatorCountZero && result > 0:
@@ -155,6 +151,14 @@ function updateDisplay(button) {
       displayText += button.innerText;
       display.innerText = displayText;
       firstNumber = Number(displayText);
+      break;
+
+    case isDecimalBtn && !secondNumber && operatorCountOne && clearDisplayForSecondNumber:
+      displayText = '0';
+      displayText += button.innerText;
+      display.innerText = displayText;
+      secondNumber = Number(displayText);
+      clearDisplayForSecondNumber = !clearDisplayForSecondNumber;
       break;
 
     case (isNumberBtn || isDecimalBtn) && operatorCountOne && clearDisplayForSecondNumber:
