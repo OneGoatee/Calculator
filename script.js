@@ -140,6 +140,13 @@ function updateDisplay(button) {
       firstNumber = Number(displayText);
       break;
 
+    case isDecimalBtn && isDisplayZero:
+      displayText = 0;
+      displayText += button.innerText;
+      display.innerText = displayText;
+      firstNumber = Number(displayText);
+      break;
+
     case (isNumberBtn || isDecimalBtn) && operatorCountZero:
       displayText += button.innerText;
       display.innerText = displayText;
