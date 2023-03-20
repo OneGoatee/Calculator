@@ -36,13 +36,7 @@ buttons.forEach(button => {
     updateDisplay(button);
     updateOperatorButtons(button);
 
-    console.log(`First Number: ${firstNumber}
-    Second Number: ${secondNumber}
-    Result: ${result}
-    Display Text: ${displayText}
-    Operator: ${operator}
-    Operator Count: ${operatorCount}
-    Clear Display For Second Number: ${clearDisplayForSecondNumber}`);
+    display.innerText = display.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   });
 });
 
