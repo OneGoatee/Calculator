@@ -37,6 +37,12 @@ buttons.forEach(button => {
     updateOperatorButtons(button);
 
     display.innerText = display.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    if (display.innerText.length > 10) {
+      display.classList.add('small-font');
+    } else {
+      display.classList.remove('small-font');
+    }
   });
 });
 
@@ -130,7 +136,9 @@ function updateFlags(button) {
 
 function updateDisplay(button) {
   switch (true) {
-    case (isNumberZeroBtn && isDisplayZero && operatorCountZero) ||
+    case (numberLength(firstNumber) === 9 && isNumberBtn && operatorCountZero) ||
+      (numberLength(secondNumber) === 9 && isNumberBtn && operatorCountOne) ||
+      (isNumberZeroBtn && isDisplayZero && operatorCountZero) ||
       (isNumberZeroBtn && isDisplayZero && operatorCountZero && isEqualBtn) ||
       (isDecimalBtn && operatorCountZero && display.innerText.includes('.')) ||
       (isDecimalBtn && operatorCountOne && displayText === '0.'):
@@ -228,4 +236,8 @@ function updateOperatorButtons(button) {
     default:
       break;
   }
+}
+
+function numberLength(number) {
+  return Math.ceil(Math.log10(number + 1));
 }
