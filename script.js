@@ -130,7 +130,7 @@ function updateFlags(button) {
 
 function updateDisplay(button) {
   switch (true) {
-    case isNumberZeroBtn && isDisplayZero && operatorCountZero:
+    case (isNumberZeroBtn && isDisplayZero && operatorCountZero) || (isNumberZeroBtn && isDisplayZero && operatorCountZero && isEqualBtn):
       break;
 
     case (isNumberBtn || isDecimalBtn) && operatorCountZero && result > 0:
@@ -139,13 +139,6 @@ function updateDisplay(button) {
       display.innerText = displayText;
       firstNumber = Number(displayText);
       break;
-
-    // case (isNumberBtn || isDecimalBtn) && clearDisplayForSecondNumber && firstNumber === result:
-    //   displayText += button.innerText;
-    //   display.innerText = displayText;
-    //   secondNumber = Number(displayText);
-    //   console.log('LOLOLOLO');
-    //   break;
 
     case (isNumberBtn || isDecimalBtn) && operatorCountZero:
       displayText += button.innerText;
