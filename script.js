@@ -29,6 +29,7 @@ let isResult = false;
 let operatorCountZero = false;
 let operatorCountOne = false;
 let clearDisplayForSecondNumber = false;
+let includesDecimal = false;
 
 buttons.forEach(button => {
   button.addEventListener('click', () => {
@@ -126,11 +127,14 @@ function updateFlags(button) {
   isDisplayZero = display.innerText === '0';
   operatorCountZero = operatorCount === 0;
   operatorCountOne = operatorCount === 1;
+  includesDecimal = display.innerText.includes('.');
 }
 
 function updateDisplay(button) {
   switch (true) {
-    case (isNumberZeroBtn && isDisplayZero && operatorCountZero) || (isNumberZeroBtn && isDisplayZero && operatorCountZero && isEqualBtn):
+    case (isNumberZeroBtn && isDisplayZero && operatorCountZero) ||
+      (isNumberZeroBtn && isDisplayZero && operatorCountZero && isEqualBtn) ||
+      (isDecimalBtn && display.innerText.includes('.')):
       break;
 
     case (isNumberBtn || isDecimalBtn) && operatorCountZero && result > 0:
