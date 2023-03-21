@@ -36,13 +36,9 @@ buttons.forEach(button => {
     updateDisplay(button);
     updateOperatorButtons(button);
 
-    display.innerText = display.innerText.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    displayThousandSeparator();
 
-    if (display.innerText.length > 10) {
-      display.classList.add('small-font');
-    } else {
-      display.classList.remove('small-font');
-    }
+    activateSmallFont();
   });
 });
 
@@ -239,5 +235,21 @@ function updateOperatorButtons(button) {
 }
 
 function numberLength(number) {
-  return Math.ceil(Math.log10(number + 1));
+  if (number.toString().includes('.')) {
+    return number.toString().length - 1;
+  } else {
+    return number.toString().length;
+  }
+}
+
+function displayThousandSeparator() {
+  display.innerText = Number(displayText).toLocaleString('en-US', { maximumFractionDigits: 20 });
+}
+
+function activateSmallFont() {
+  if ((numberLength(firstNumber) === 9 && operatorCountZero) || (numberLength(secondNumber) === 9 && operatorCountOne) || displayText === result) {
+    display.classList.add('small-font');
+  } else {
+    display.classList.remove('small-font');
+  }
 }
