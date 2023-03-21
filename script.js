@@ -63,6 +63,10 @@ function divide() {
     result = `Error`;
   } else {
     result = firstNumber / secondNumber;
+
+    if ((firstNumber / secondNumber).toString().length > 9) {
+      result = (firstNumber / secondNumber).toExponential(0);
+    }
   }
 }
 
@@ -247,6 +251,8 @@ function numberLength(number) {
 
 function displayThousandSeparator() {
   if (result.toString().includes('+')) {
+    return;
+  } else if (result.toString().includes('-')) {
     return;
   }
 
