@@ -44,6 +44,10 @@ buttons.forEach(button => {
 
 function add() {
   result = firstNumber + secondNumber;
+
+  if ((firstNumber + secondNumber).toString().length > 9) {
+    result = (firstNumber + secondNumber).toExponential(0);
+  }
 }
 
 function subtract() {
@@ -72,7 +76,14 @@ function divide() {
 
 function plusMinus() {
   displayText = display.innerText * -1;
-  display.innerText = displayText;
+
+  if (displayText.toString().length > 9) {
+    displayText = displayText.toExponential(0);
+    display.innerText = displayText;
+  } else {
+    display.innerText = displayText;
+  }
+
   firstNumber = Number(displayText);
 }
 
@@ -262,7 +273,6 @@ function displayThousandSeparator() {
 function activateSmallFont() {
   if ((numberLength(firstNumber) === 9 && operatorCountZero) || (numberLength(secondNumber) === 9 && operatorCountOne) || (numberLength(result) === 9 && operatorCountOne)) {
     display.classList.add('small-font');
-    console.log(numberLength(result));
   } else {
     display.classList.remove('small-font');
   }
