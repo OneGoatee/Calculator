@@ -52,6 +52,10 @@ function subtract() {
 
 function multiply() {
   result = firstNumber * secondNumber;
+
+  if ((firstNumber * secondNumber).toString().length > 9) {
+    result = (firstNumber * secondNumber).toExponential(0);
+  }
 }
 
 function divide() {
@@ -105,7 +109,6 @@ function operate(operator) {
     default:
       break;
   }
-
   prepareForNextOperation();
 }
 
@@ -243,6 +246,10 @@ function numberLength(number) {
 }
 
 function displayThousandSeparator() {
+  if (result.toString().includes('+')) {
+    return;
+  }
+
   display.innerText = Number(displayText).toLocaleString('en-US', { maximumFractionDigits: 20 });
 }
 
