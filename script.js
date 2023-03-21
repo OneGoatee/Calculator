@@ -260,8 +260,9 @@ function displayThousandSeparator() {
 }
 
 function activateSmallFont() {
-  if ((numberLength(firstNumber) === 9 && operatorCountZero) || (numberLength(secondNumber) === 9 && operatorCountOne) || displayText === result) {
+  if ((numberLength(firstNumber) === 9 && operatorCountZero) || (numberLength(secondNumber) === 9 && operatorCountOne) || (numberLength(result) === 9 && operatorCountOne)) {
     display.classList.add('small-font');
+    console.log(numberLength(result));
   } else {
     display.classList.remove('small-font');
   }
